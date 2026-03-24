@@ -7,11 +7,12 @@ locals {
   # - Use var.administrator_login_password if explicitly provided.
   # - Otherwise, if generate_administrator_login_password is true, use the generated random password.
   # - Otherwise leave null (Entra-only auth scenario).
-  administrator_login_password_effective = (
-    var.administrator_login_password != null
-    ? var.administrator_login_password
-    : (var.generate_administrator_login_password ? random_password.administrator_login_password[0].result : null)
-  )
+  # administrator_login_password_effective = (
+  #   var.administrator_login_password != null
+  #   ? var.administrator_login_password
+  #   : (var.generate_administrator_login_password ? random_password.administrator_login_password[0].result : null)
+  # )
+  administrator_login_password_effective = var.administrator_login_password
 }
 
 # Private endpoint application security group associations.

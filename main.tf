@@ -1,28 +1,28 @@
-resource "random_password" "administrator_login_password" {
-  count = var.generate_administrator_login_password && var.administrator_login_password == null ? 1 : 0
+# resource "random_password" "administrator_login_password" {
+#   count = var.generate_administrator_login_password && var.administrator_login_password == null ? 1 : 0
 
-  length           = 128
-  lower            = true
-  min_lower        = 1
-  min_numeric      = 1
-  min_special      = 1
-  min_upper        = 1
-  numeric          = true
-  override_special = "!#$%&*()-_=+[]{}<>:?"
-  special          = true
-  upper            = true
-}
+#   length           = 128
+#   lower            = true
+#   min_lower        = 1
+#   min_numeric      = 1
+#   min_special      = 1
+#   min_upper        = 1
+#   numeric          = true
+#   override_special = "!#$%&*()-_=+[]{}<>:?"
+#   special          = true
+#   upper            = true
+# }
 
-resource "azurerm_key_vault_secret" "administrator_login_password" {
-  count = var.administrator_login_password_key_vault_configuration != null && (var.administrator_login_password != null || var.generate_administrator_login_password) ? 1 : 0
+# resource "azurerm_key_vault_secret" "administrator_login_password" {
+#   count = var.administrator_login_password_key_vault_configuration != null && (var.administrator_login_password != null || var.generate_administrator_login_password) ? 1 : 0
 
-  key_vault_id    = var.administrator_login_password_key_vault_configuration.key_vault_resource_id
-  name            = var.administrator_login_password_key_vault_configuration.secret_name
-  content_type    = var.administrator_login_password_key_vault_configuration.content_type
-  expiration_date = var.administrator_login_password_key_vault_configuration.expiration_date
-  tags            = var.administrator_login_password_key_vault_configuration.tags
-  value           = local.administrator_login_password_effective
-}
+#   key_vault_id    = var.administrator_login_password_key_vault_configuration.key_vault_resource_id
+#   name            = var.administrator_login_password_key_vault_configuration.secret_name
+#   content_type    = var.administrator_login_password_key_vault_configuration.content_type
+#   expiration_date = var.administrator_login_password_key_vault_configuration.expiration_date
+#   tags            = var.administrator_login_password_key_vault_configuration.tags
+#   value           = local.administrator_login_password_effective
+# }
 
 resource "azurerm_mssql_server" "this" {
   location                                     = var.location
