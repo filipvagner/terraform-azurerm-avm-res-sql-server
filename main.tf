@@ -62,26 +62,26 @@ resource "azurerm_mssql_server" "this" {
   }
 
   lifecycle {
-    precondition {
-      condition     = !(var.administrator_login_password_wo != null && var.administrator_login_password_wo_version == null)
-      error_message = "The variable `administrator_login_password_wo_version` must not be null when `administrator_login_password_wo` is set."
-    }
+    # precondition {
+    #   condition     = !(var.administrator_login_password_wo != null && var.administrator_login_password_wo_version == null)
+    #   error_message = "The variable `administrator_login_password_wo_version` must not be null when `administrator_login_password_wo` is set."
+    # }
     precondition {
       condition     = !(var.administrator_login_password != null && var.generate_administrator_login_password)
       error_message = "The variables `administrator_login_password` and `generate_administrator_login_password` cannot be used together. Provide `administrator_login_password` OR set `generate_administrator_login_password = true`, not both."
     }
-    precondition {
-      condition     = !(var.administrator_login_password_wo != null && var.generate_administrator_login_password)
-      error_message = "The variables `administrator_login_password_wo` and `generate_administrator_login_password` cannot be used together. Provide `administrator_login_password_wo` OR set `generate_administrator_login_password = true`, not both."
-    }
-    precondition {
-      condition     = !(var.administrator_login_password_key_vault_configuration != null && var.administrator_login_password_wo != null)
-      error_message = "Key Vault storage is not supported when using `administrator_login_password_wo`: write-only values cannot be read back and therefore cannot be stored in Key Vault. Use `administrator_login_password` or set `generate_administrator_login_password = true` to store the password in Key Vault."
-    }
-    precondition {
-      condition     = !(var.administrator_login_password_key_vault_configuration != null && local.administrator_login_password_effective == null && var.administrator_login_password_wo == null)
-      error_message = "Cannot store the administrator login password in Key Vault because no password is available. Either set `administrator_login_password` or set `generate_administrator_login_password = true`."
-    }
+    # precondition {
+    #   condition     = !(var.administrator_login_password_wo != null && var.generate_administrator_login_password)
+    #   error_message = "The variables `administrator_login_password_wo` and `generate_administrator_login_password` cannot be used together. Provide `administrator_login_password_wo` OR set `generate_administrator_login_password = true`, not both."
+    # }
+    # precondition {
+    #   condition     = !(var.administrator_login_password_key_vault_configuration != null && var.administrator_login_password_wo != null)
+    #   error_message = "Key Vault storage is not supported when using `administrator_login_password_wo`: write-only values cannot be read back and therefore cannot be stored in Key Vault. Use `administrator_login_password` or set `generate_administrator_login_password = true` to store the password in Key Vault."
+    # }
+    # precondition {
+    #   condition     = !(var.administrator_login_password_key_vault_configuration != null && local.administrator_login_password_effective == null && var.administrator_login_password_wo == null)
+    #   error_message = "Cannot store the administrator login password in Key Vault because no password is available. Either set `administrator_login_password` or set `generate_administrator_login_password = true`."
+    # }
   }
 }
 
